@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../src/common/prisma.service';
 import * as bcrypt from 'bcrypt';
+import { Url } from '@prisma/client';
 
 @Injectable()
 export class TestService {
@@ -47,6 +48,14 @@ export class TestService {
 
   async deleteUrl() {
     await this.prismaService.url.deleteMany({
+      where: {
+        username: 'testUser',
+      },
+    });
+  }
+
+  async getUrl(): Promise<Url> {
+    return this.prismaService.url.findFirst({
       where: {
         username: 'testUser',
       },

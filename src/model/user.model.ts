@@ -12,7 +12,7 @@ export class UserResponse {
 
 export class UserLoginRequest {
   username: string;
-  password: String;
+  password: string;
 }
 
 export class UserUpdateRequest {

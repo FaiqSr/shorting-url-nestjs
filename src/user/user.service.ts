@@ -135,7 +135,7 @@ export class UserService {
       data: user,
     });
 
-    const updateUsernameUrl = await this.prismaService.url.updateMany({
+    await this.prismaService.url.updateMany({
       where: {
         username: usernameNow,
       },
@@ -151,7 +151,7 @@ export class UserService {
   }
 
   async logout(user: User): Promise<UserResponse> {
-    const result = await this.prismaService.user.update({
+    await this.prismaService.user.update({
       where: {
         username: user.username,
       },
