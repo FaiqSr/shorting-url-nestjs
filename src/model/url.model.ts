@@ -1,4 +1,5 @@
 export class UrlResponse {
+  id: number;
   username: string;
   name: string;
   url: string;
@@ -9,4 +10,19 @@ export class UrlResponse {
 export class UrlCreateRequest {
   name: string;
   url: string;
+}
+
+export class UrlGetRequest {
+  page?: number;
+  size?: number;
+}
+
+export class UrlRemoveRequest {
+  urlId: number;
+}
+
+export class UrlUpdateRequest {
+  id: number;
+  name?: string;
+  url?: string;
 }

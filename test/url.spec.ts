@@ -98,4 +98,98 @@ describe('UrlController (e2e)', () => {
       expect(response.body.data[0].updatedAt).toBeDefined();
     });
   });
+
+  describe('PATCH UPDATE /api/urls', () => {
+    beforeEach(async () => {
+      await testService.deleteAll();
+      await testService.createUser();
+      await testService.createUrl();
+    });
+
+    it('should be rejected if url is not found', async () => {
+      const url = await testService.getUrl();
+      const response = await request(app.getHttpServer())
+        .patch('/api/urls/')
+        .set('Authorization', 'test')
+        .send({
+          id: url.id + 1,
+        });
+
+      logger.info(response.body);
+
+      expect(response.status).toBe(404);
+      expect(response.body.errors).toBeDefined();
+    });
+
+    it('should be able to update name', async () => {
+      const url = await testService.getUrl();
+      const response = await request(app.getHttpServer())
+        .patch('/api/urls/')
+        .set('Authorization', 'test')
+        .send({
+          id: url.id,
+          name: 'test-name-url-updated',
+        });
+
+      logger.info(response.body);
+
+      expect(response.status).toBe(200);
+      expect(response.body.data.username).toBe('testUser');
+      expect(response.body.data.name).toBe('test-name-url-updated');
+      expect(response.body.data.createdAt).toBeDefined();
+      expect(response.body.data.updatedAt).toBeDefined();
+    });
+
+    it('should be able to update name', async () => {
+      const url = await testService.getUrl();
+      const response = await request(app.getHttpServer())
+        .patch('/api/urls/')
+        .set('Authorization', 'test')
+        .send({
+          id: url.id,
+          name: 'test-name-url-updated',
+          url: 'https://test.com/test-updated',
+        });
+
+      logger.info(response.body);
+
+      expect(response.status).toBe(200);
+      expect(response.body.data.username).toBe('testUser');
+      expect(response.body.data.url).toBe('https://test.com/test-updated');
+      expect(response.body.data.createdAt).toBeDefined();
+      expect(response.body.data.updatedAt).toBeDefined();
+    });
+  });
+
+  describe('DELETE REMOVE /api/urls/:urlId', () => {
+    beforeEach(async () => {
+      await testService.deleteAll();
+      await testService.createUser();
+      await testService.createUrl();
+    });
+
+    it('should be rejected if contact is not found', async () => {
+      const url = await testService.getUrl();
+      const response = await request(app.getHttpServer())
+        .delete(`/api/urls/${url.id + 1}`)
+        .set('Authorization', 'test');
+
+      logger.info(response.body);
+
+      expect(response.status).toBe(404);
+      expect(response.body.errors).toBeDefined();
+    });
+
+    it('should be able to remove url', async () => {
+      const url = await testService.getUrl();
+      const response = await request(app.getHttpServer())
+        .delete(`/api/urls/${url.id}`)
+        .set('Authorization', 'test');
+
+      logger.info(response.body);
+
+      expect(response.status).toBe(200);
+      expect(response.body.data).toBe(true);
+    });
+  });
 });
