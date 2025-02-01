@@ -27,7 +27,7 @@ Response Body (error)
 
 ```json
 {
-  "errors": "Username already exists"
+  "errors": "This will be error message"
 }
 ```
 
@@ -60,7 +60,7 @@ Response Body (error) :
 
 ```json
 {
-  "errors": "username or password is invalid"
+  "errors": "This will be error message"
 }
 ```
 
@@ -78,7 +78,7 @@ Response Body:
 {
   "data": {
     "username": "username",
-    "password": "password",
+    "name": "name",
     "token": "token"
   }
 }
@@ -88,7 +88,7 @@ Response Body (error):
 
 ```json
 {
-  "errors": "Unauthorized"
+  "errors": "This will be error message"
 }
 ```
 
@@ -107,5 +107,43 @@ Request Body :
   "username": "username",
   "password": "password",
   "name": "name"
+}
+```
+
+Response Body :
+
+```json
+{}
+```
+
+Response Body (error):
+
+```json
+{
+  "errors": "This will be error message"
+}
+```
+
+# DELETE USER
+
+Endpoint : DELETE /api/users/logout
+
+Headers :
+
+- Authorization: token
+
+Response Body:
+
+```json
+{
+  "data": true
+}
+```
+
+Response Body (error):
+
+```json
+{
+  "errors": "This will be error message"
 }
 ```
